@@ -1,0 +1,28 @@
+#begin:config
+DECK_NAME:test deck
+LANG1:english
+LANG2:spanish
+SHOW_ROMANIZED:0
+#end
+
+anything outside of a section declared with #begin and ended with #end is ignored
+
+each word entry must be formatted like
+original_word:romanized:translated_word
+
+if romanization isn't needed, format it like
+original_word::translated_word
+
+
+#begin:words
+hello::hola
+i::yo
+if::si
+no::no
+like::gustar
+hot::calor
+outside::afuera
+how::como
+you::tu
+salad::ensalada
+#end
