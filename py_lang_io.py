@@ -6,6 +6,3 @@ def realtime_print(obj):
 
 def realtime_println(obj):
     realtime_print(str(obj) + "\n")
-
-def cls():
-    realtime_print("\n" * 100)

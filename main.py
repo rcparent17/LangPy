@@ -44,7 +44,9 @@ class Deck:
                     elif in_section and current_section == "words":
                         word = line.split(":")
                         self.words.append(Word(word[0], word[1], word[2], float((len(word[0]) + len(word[2])) / 2.0)))
+            self.words = sorted(self.words, key = lambda x: x.difficulty)
 
 if __name__ == "__main__":
+    os.system("clear")
     d = Deck("test.deck")
     plio.realtime_println(d)
