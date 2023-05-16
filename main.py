@@ -1,5 +1,6 @@
 import sys, os
 from dataclasses import dataclass
+import py_lang_io as plio
 
 @dataclass
 class Word:
@@ -8,12 +9,21 @@ class Word:
     translated: str
     difficulty: float
 
+    def __str__(self):
+        return f"Word \"{self.original}\":\n\tRomanized: {self.romanized}\n\tTranslated: {self.translated}\n\tDifficulty: {self.difficulty}"
+
 class Deck:
-    name: str = ""
-    lang1: str = ""
-    lang2: str = ""
-    show_romanized: bool = False
+    config: dict = {}
     words: [Word] = []
+
+    def __str__(self):
+        out = f"Deck \"{self.config['DECK_NAME']}\"\nConfiguration:\n"
+        for k, v in self.config.items():
+            out += f"\t{k}: {v}\n"
+        out += "Words:\n"
+        for word in self.words:
+            out += str(word) + "\n"
+        return out
 
     def __init__(self, deck_file):
         with open(deck_file, "r") as deck:
@@ -30,19 +40,11 @@ class Deck:
                 else:
                     if in_section and current_section == "config":
                         setting = line.split(":")
-                        if setting[0] == "DECK_NAME":
-                            self.name = setting[1]
-                        elif setting[0] == "LANG1":
-                            self.lang1 = setting[1]
-                        elif setting[0] == "LANG2":
-                            self.lang2 = setting[1]
-                        elif setting[0] == "SHOW_ROMANIZED":
-                            self.show_romanized = bool(int(setting[1]))
+                        self.config[setting[0]] = setting[1]
                     elif in_section and current_section == "words":
                         word = line.split(":")
-                        print(word)
                         self.words.append(Word(word[0], word[1], word[2], float((len(word[0]) + len(word[2])) / 2.0)))
 
 if __name__ == "__main__":
     d = Deck("test.deck")
-    print(d.words)
+    plio.realtime_println(d)
